@@ -93,7 +93,9 @@ modules.xml
 
 ### Java ###
 # Compiled class file
-src/*.class
+src/Main.class
+src/Main$AverageRunTime.class
+src/OutputColor.class
 
 # Log file
 *.log
