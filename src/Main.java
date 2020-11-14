@@ -62,16 +62,14 @@ public class Main {
 						}
 					} while (!done);
 
-					if(choice == 5) {
+					if(choice == 5)
 						exit = true;
-					} else {
-						arr = inputSizeArr(takeSize());
-					}
-
 
 					switch (choice) {
 						case 1:
 							System.out.println("QUICK SORT");
+							// we call this everytime so that the algorithm can have a new unsorted array everytime.
+							arr = inputSizeArr(takeSize());
 							Long sTime = System.nanoTime();
 							quickSort(arr);
 							Long runtime = (System.nanoTime() - sTime);
@@ -79,6 +77,7 @@ public class Main {
 							break;
 						case 2:
 							System.out.println("MERGE SORT");
+							arr = inputSizeArr(takeSize());
 							Long sTimeMerge = System.nanoTime();
 							mergeSort(arr);
 							Long runTimeMerge = System.nanoTime() - sTimeMerge;
@@ -86,6 +85,7 @@ public class Main {
 							break;
 						case 3:
 							System.out.println("INSERTION SORT");
+							arr = inputSizeArr(takeSize());
 							Long sTimeInsertionSort = System.nanoTime();
 							insertionSort(arr);
 							Long runTimeInsertionSort = System.nanoTime() - sTimeInsertionSort;
@@ -93,6 +93,7 @@ public class Main {
 							break;
 						case 4:
 							System.out.println("BINARY SEARCH");
+							arr = inputSizeArr(takeSize());
 							Long sTimeBinarySearch = System.nanoTime();
 							System.out.print("Enter number to search for: ");
 							numberToFind = input.nextInt();
@@ -111,7 +112,6 @@ public class Main {
 				} while (!exit);
 			} else if(choice1 == 2) {
 				AverageRunTime averageRunTime = new AverageRunTime();
-				averageRunTime.array = inputSizeArr(takeSize());
 				averageRunTime.runAll();
 			} else if(choice1 == 3) {
 				doneExec = true;
@@ -228,6 +228,7 @@ public class Main {
 
 	static class AverageRunTime {
 		int[] array;
+		int[] unsortedArray = this.array;
 		Long[] test = new Long[5];
 
 
@@ -242,8 +243,10 @@ public class Main {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				quickSort(array);
+				quickSort(unsortedArray);
 				Long runTime = (System.nanoTime() - startTime);
+				unsortedArray = array;
+				// SPOT
 				test[i] = runTime;
 				totalRunTime += runTime;
 			}
@@ -258,8 +261,9 @@ public class Main {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				insertionSort(array);
+				insertionSort(unsortedArray);
 				Long runTime = (System.nanoTime() - startTime);
+				unsortedArray = array;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
@@ -273,8 +277,9 @@ public class Main {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				mergeSort(array);
+				mergeSort(unsortedArray);
 				Long runTime = (System.nanoTime() - startTime);
+				unsortedArray = array;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
@@ -288,16 +293,26 @@ public class Main {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				binarySearch(array, numberToFind);
+				binarySearch(unsortedArray, numberToFind);
 				Long runTime = (System.nanoTime() - startTime);
+				unsortedArray = array;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
 		}
 
 		void runAll() throws IOException {
+			/**
+			 * array and unsorted array are basically the same thing
+			 * But if we use just one array(e.g just (#array)) object the program can end up
+			 * sorting an already sorted array.So before we use unsortedArray we factory reset it.
+			 */
+			array = inputSizeArr(takeSize());
+			unsortedArray = array;
 			System.out.println("Average run time - quicksort: " + avgRunTimeQuicksort());
+			// SPOT
 			System.out.println(array.length);
+			System.out.println(unsortedArray.length);
 			System.out.println(Arrays.toString(test));
 			System.out.println("Average run time - Insertion sort: " + avgRunTimeInsertionSort());
 			System.out.println("Average run time - Merge sort: " + avgRunTimeMergeSort());
