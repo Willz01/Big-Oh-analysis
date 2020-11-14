@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Main {
 	static boolean exit = false;
 	static int numberToFind;
+	static int[] arr = null;
 
 	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
@@ -43,34 +44,32 @@ public class Main {
 
 
 			input.nextLine();
-			int[] arr = null;
+
 			if(choice == 5) {
 				exit = true;
 			}
+			arr = inputSizeArr(takeSize());
+
 			switch (choice) {
 				case 1:
-					arr = inputSizeArr(takeSize());
 					Long sTime = System.nanoTime();
 					quickSort(arr);
 					Long runtime = (System.nanoTime() - sTime);
 					displayRunTime(runtime);
 					break;
 				case 2:
-					arr = inputSizeArr(takeSize());
 					Long sTimeMerge = System.nanoTime();
 					mergeSort(arr);
 					Long runTimeMerge = System.nanoTime() - sTimeMerge;
 					displayRunTime(runTimeMerge);
 					break;
 				case 3:
-					arr = inputSizeArr(takeSize());
 					Long sTimeInsertionSort = System.nanoTime();
 					insertionSort(arr);
 					Long runTimeInsertionSort = System.nanoTime() - sTimeInsertionSort;
 					displayRunTime(runTimeInsertionSort);
 					break;
 				case 4:
-					arr = inputSizeArr(takeSize());
 					Long sTimeBinarySearch = System.nanoTime();
 					System.out.print("Enter number to search for: ");
 					numberToFind = input.nextInt();
@@ -196,50 +195,70 @@ public class Main {
 	}
 
 	static class AverageRunTime {
+		int[] array;
+
+		AverageRunTime() throws IOException {
+		}
 
 		/**
 		 * @return average run time of quicksort algorithm ran 5 times.
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgRunTimeQuicksort() throws IOException {
+			array  = inputSizeArr(takeSize());
 			Long totalRunTime = null;
 			for(int i = 0; i < 5; i++) {
-				Long s1 = System.nanoTime();
-				quickSort(inputSizeArr(takeSize()));
-				Long runTime = (System.nanoTime() - s1);
+				Long startTime = System.nanoTime();
+				quickSort(array);
+				Long runTime = (System.nanoTime() - startTime);
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
 		}
 
+		/**
+		 * @return average run time of quicksort algorithm ran 5 times.
+		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
+		 */
 		Long avgRunTimeInsertionSort() throws IOException {
+			array  = inputSizeArr(takeSize());
 			Long totalRunTime = null;
 			for(int i = 0; i < 5; i++) {
-				Long s1 = System.nanoTime();
-				insertionSort(inputSizeArr(takeSize()));
-				Long runTime = (System.nanoTime() - s1);
+				Long startTime = System.nanoTime();
+				insertionSort(array);
+				Long runTime = (System.nanoTime() - startTime);
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
 		}
 
+		/**
+		 * @return average run time of quicksort algorithm ran 5 times.
+		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
+		 */
 		Long avgMergeSort() throws IOException {
+			array  = inputSizeArr(takeSize());
 			Long totalRunTime = null;
 			for(int i = 0; i < 5; i++) {
-				Long s1 = System.nanoTime();
-				mergeSort(inputSizeArr(takeSize()));
-				Long runTime = (System.nanoTime() - s1);
+				Long startTime = System.nanoTime();
+				mergeSort(array);
+				Long runTime = (System.nanoTime() - startTime);
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
 		}
 
+		/**
+		 * @return average run time of quicksort algorithm ran 5 times.
+		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
+		 */
 		Long avgBinarySearch() throws IOException {
+			array  = inputSizeArr(takeSize());
 			Long totalRunTime = null;
 			for(int i = 0; i < 5; i++) {
-				Long s1 = System.nanoTime();
-				binarySearch(inputSizeArr(takeSize()), numberToFind);
-				Long runTime = (System.nanoTime() - s1);
+				Long startTime = System.nanoTime();
+				binarySearch(array, numberToFind);
+				Long runTime = (System.nanoTime() - startTime);
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
