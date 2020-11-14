@@ -2,91 +2,125 @@ import java.io.BufferedReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import static java.lang.Runtime.getRuntime;
 
 
 public class Main {
 	static boolean exit = false;
 	static int numberToFind;
 	static int[] arr = null;
+	static boolean doneExec = false;
 
 	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
 
 		do {
-			System.out.println("=====================================================================================================");
-			System.out.println("Big oh analysis on several sorting and a searching algorithms.");
-			System.out.println("The running time of each algorithm is calculated by (currentTIme - startTime)");
-			System.out.println("Running time is displayed in nano seconds, milli seconds and seconds!");
-			System.out.println("=====================================================================================================");
+			System.out.println("****************************");
+			System.out.println("1) Run for each algorithm");
+			System.out.println("2) Returns the avg for: ");
+			System.out.println("   - Quick sort");
+			System.out.println("   - Insertion sort");
+			System.out.println("   - Merge sort");
+			System.out.println("   - Binary Search");
+			System.out.println("3) Exit");
+			System.out.println("****************************");
+			System.out.print(">> ");
 
-			int choice = 0;
-			boolean done = false;
-			do {
-				try {
-					System.out.println("******************");
-					System.out.println("******************");
-					System.out.println("1) Quick sort");
-					System.out.println("2) Merge sort");
-					System.out.println("3) Insertion sort");
-					System.out.println("4) Binary search");
-					System.out.println("5) Exit");
-					System.out.println("******************");
-					System.out.print(">> ");
-					choice = input.nextInt();
-					done = true;
-				} catch (InputMismatchException e) {
-					input.nextLine();
-					System.err.println("Number must be an integer");
-				}
-			} while (!done);
-
-
+			int choice1 = input.nextInt();
 			input.nextLine();
 
-			if(choice == 5) {
-				exit = true;
-			}
-			arr = inputSizeArr(takeSize());
+			if(choice1 == 1) {
+				do {
+					System.out.println("=====================================================================================================");
+					System.out.println("Big oh analysis on several sorting and a searching algorithms.");
+					System.out.println("The running time of each algorithm is calculated by (currentTIme - startTime)");
+					System.out.println("Running time is displayed in nano seconds, milli seconds and seconds!");
+					System.out.println("=====================================================================================================");
 
-			switch (choice) {
-				case 1:
-					Long sTime = System.nanoTime();
-					quickSort(arr);
-					Long runtime = (System.nanoTime() - sTime);
-					displayRunTime(runtime);
-					break;
-				case 2:
-					Long sTimeMerge = System.nanoTime();
-					mergeSort(arr);
-					Long runTimeMerge = System.nanoTime() - sTimeMerge;
-					displayRunTime(runTimeMerge);
-					break;
-				case 3:
-					Long sTimeInsertionSort = System.nanoTime();
-					insertionSort(arr);
-					Long runTimeInsertionSort = System.nanoTime() - sTimeInsertionSort;
-					displayRunTime(runTimeInsertionSort);
-					break;
-				case 4:
-					Long sTimeBinarySearch = System.nanoTime();
-					System.out.print("Enter number to search for: ");
-					numberToFind = input.nextInt();
-					input.nextLine();
-					binarySearch(arr, numberToFind);
-					Long runtimeBinarySearch = (System.nanoTime() - sTimeBinarySearch);
-					displayRunTime(runtimeBinarySearch);
-					break;
-				case 5:
-					System.out.println("Thanks for using!");
-					System.exit(0);
-					break;
-				default:
-					System.out.println("Invalid input");
-			}
-		} while (!exit);
+					int choice = 0;
+					boolean done = false;
+					do {
+						try {
+							System.out.println("******************");
+							System.out.println("******************");
+							System.out.println("1) Quick sort");
+							System.out.println("2) Merge sort");
+							System.out.println("3) Insertion sort");
+							System.out.println("4) Binary search");
+							System.out.println("5) Exit");
+							System.out.println("******************");
+							System.out.print(">> ");
+							choice = input.nextInt();
+							done = true;
+						} catch (InputMismatchException e) {
+							input.nextLine();
+							System.err.println("Number must be an integer");
+						}
+					} while (!done);
 
+					if(choice == 5) {
+						exit = true;
+					} else {
+						arr = inputSizeArr(takeSize());
+					}
+
+
+					switch (choice) {
+						case 1:
+							System.out.println("QUICK SORT");
+							Long sTime = System.nanoTime();
+							quickSort(arr);
+							Long runtime = (System.nanoTime() - sTime);
+							displayRunTime(runtime);
+							break;
+						case 2:
+							System.out.println("MERGE SORT");
+							Long sTimeMerge = System.nanoTime();
+							mergeSort(arr);
+							Long runTimeMerge = System.nanoTime() - sTimeMerge;
+							displayRunTime(runTimeMerge);
+							break;
+						case 3:
+							System.out.println("INSERTION SORT");
+							Long sTimeInsertionSort = System.nanoTime();
+							insertionSort(arr);
+							Long runTimeInsertionSort = System.nanoTime() - sTimeInsertionSort;
+							displayRunTime(runTimeInsertionSort);
+							break;
+						case 4:
+							System.out.println("BINARY SEARCH");
+							Long sTimeBinarySearch = System.nanoTime();
+							System.out.print("Enter number to search for: ");
+							numberToFind = input.nextInt();
+							input.nextLine();
+							binarySearch(arr, numberToFind);
+							Long runtimeBinarySearch = (System.nanoTime() - sTimeBinarySearch);
+							displayRunTime(runtimeBinarySearch);
+							break;
+						case 5:
+							System.out.println("Thanks for using!");
+							System.exit(0);
+							break;
+						default:
+							System.out.println("Invalid input");
+					}
+				} while (!exit);
+			} else if(choice1 == 2) {
+				AverageRunTime averageRunTime = new AverageRunTime();
+				averageRunTime.array = inputSizeArr(takeSize());
+				averageRunTime.runAll();
+			} else if(choice1 == 3) {
+				doneExec = true;
+				System.out.println("Bye!");
+				getRuntime().exit(0);
+			} else {
+				System.out.println("Invalid input!");
+			}
+		} while (!doneExec);
 	}
 
 	/**
@@ -131,10 +165,8 @@ public class Main {
 			} else passed = true;
 		} while (!passed);
 
-
 		int[] arr = inputSizeArr(size);
 		System.out.println("Inputs read!!");
-
 		System.out.println("Input size(N): " + arr.length);
 		System.out.println("******************");
 
@@ -145,7 +177,7 @@ public class Main {
 	 * @param arr array to implement algorithm on
 	 */
 	public static void quickSort(int[] arr) {
-		System.out.println("QUICK SORT");
+//		System.out.println("QUICK SORT");
 		/** code **/
 	}
 
@@ -153,7 +185,7 @@ public class Main {
 	 * @param arr array to implement algorithm on
 	 */
 	public static void insertionSort(int[] arr) {
-		System.out.println("INSERTION SORT");
+//		System.out.println("INSERTION SORT");
 		/** code **/
 
 	}
@@ -162,7 +194,7 @@ public class Main {
 	 * @param arr array to implement algorithm on
 	 */
 	public static boolean binarySearch(int[] arr, int number) {
-		System.out.println("BINARY SEARCH");
+//		System.out.println("BINARY SEARCH");
 		/** code **/
 		return true;
 	}
@@ -171,7 +203,7 @@ public class Main {
 	 * @param arr array to implement algorithm on
 	 */
 	public static void mergeSort(int[] arr) {
-		System.out.println("MERGE SORT");
+//		System.out.println("MERGE SORT");
 		/** code **/
 	}
 
@@ -196,6 +228,8 @@ public class Main {
 
 	static class AverageRunTime {
 		int[] array;
+		Long[] test = new Long[5];
+
 
 		AverageRunTime() throws IOException {
 		}
@@ -205,12 +239,12 @@ public class Main {
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgRunTimeQuicksort() throws IOException {
-			array  = inputSizeArr(takeSize());
-			Long totalRunTime = null;
+			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
 				quickSort(array);
 				Long runTime = (System.nanoTime() - startTime);
+				test[i] = runTime;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
@@ -221,8 +255,7 @@ public class Main {
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgRunTimeInsertionSort() throws IOException {
-			array  = inputSizeArr(takeSize());
-			Long totalRunTime = null;
+			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
 				insertionSort(array);
@@ -236,9 +269,8 @@ public class Main {
 		 * @return average run time of quicksort algorithm ran 5 times.
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
-		Long avgMergeSort() throws IOException {
-			array  = inputSizeArr(takeSize());
-			Long totalRunTime = null;
+		Long avgRunTimeMergeSort() throws IOException {
+			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
 				mergeSort(array);
@@ -253,8 +285,7 @@ public class Main {
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgBinarySearch() throws IOException {
-			array  = inputSizeArr(takeSize());
-			Long totalRunTime = null;
+			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
 				binarySearch(array, numberToFind);
@@ -262,6 +293,15 @@ public class Main {
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
+		}
+
+		void runAll() throws IOException {
+			System.out.println("Average run time - quicksort: " + avgRunTimeQuicksort());
+			System.out.println(array.length);
+			System.out.println(Arrays.toString(test));
+			System.out.println("Average run time - Insertion sort: " + avgRunTimeInsertionSort());
+			System.out.println("Average run time - Merge sort: " + avgRunTimeMergeSort());
+			System.out.println("Average run time - Binary search: " + avgBinarySearch());
 		}
 
 
