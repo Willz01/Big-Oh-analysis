@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static java.lang.Runtime.getRuntime;
-
+/* https://vinayakgarg.wordpress.com/2011/10/25/time-comparison-of-quick-sort-insertion-sort-and-bubble-sort/ */
 
 public class Main {
 	static boolean exit = false;
@@ -137,7 +137,7 @@ public class Main {
 	}
 
 	/**
-	 * @return size of user input and will be used in {@link #inputSizeArr} to create array on input length size.
+	 * @return size of user input and will be used in {@link #inputSizeArr} to create array of length size.
 	 * @throws IOException - invalid input
 	 *                     - if size < 0 or size > 1000000 repeat input
 	 */
@@ -229,6 +229,7 @@ public class Main {
 	static class AverageRunTime {
 		int[] array;
 		int[] unsortedArray = this.array;
+		// test
 		Long[] test = new Long[5];
 
 
@@ -237,15 +238,14 @@ public class Main {
 
 		/**
 		 * @return average run time of quicksort algorithm ran 5 times.
-		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
-		Long avgRunTimeQuicksort() throws IOException {
+		Long avgRunTimeQuicksort() {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				quickSort(unsortedArray);
+				quickSort(array);
 				Long runTime = (System.nanoTime() - startTime);
-				unsortedArray = array;
+				array = unsortedArray;
 				// SPOT
 				test[i] = runTime;
 				totalRunTime += runTime;
@@ -255,15 +255,14 @@ public class Main {
 
 		/**
 		 * @return average run time of quicksort algorithm ran 5 times.
-		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgRunTimeInsertionSort() throws IOException {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				insertionSort(unsortedArray);
+				insertionSort(array);
 				Long runTime = (System.nanoTime() - startTime);
-				unsortedArray = array;
+				array = unsortedArray;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
@@ -271,15 +270,14 @@ public class Main {
 
 		/**
 		 * @return average run time of quicksort algorithm ran 5 times.
-		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgRunTimeMergeSort() throws IOException {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				mergeSort(unsortedArray);
+				mergeSort(array);
 				Long runTime = (System.nanoTime() - startTime);
-				unsortedArray = array;
+				array = unsortedArray;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
@@ -287,36 +285,38 @@ public class Main {
 
 		/**
 		 * @return average run time of quicksort algorithm ran 5 times.
-		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
 		Long avgBinarySearch() throws IOException {
 			Long totalRunTime = 0L;
 			for(int i = 0; i < 5; i++) {
 				Long startTime = System.nanoTime();
-				binarySearch(unsortedArray, numberToFind);
+				binarySearch(array, numberToFind);
 				Long runTime = (System.nanoTime() - startTime);
-				unsortedArray = array;
+				array = unsortedArray;
 				totalRunTime += runTime;
 			}
 			return totalRunTime / 5;
 		}
 
+		/**
+		 * * array and unsorted array are basically the same thing
+		 * * But if we use just one array(e.g just (#array)) object the program can end up
+		 * * sorting an already sorted array.So before we use array we factory reset it with unsortedArray in each call's method(e.g {@link #avgRunTimeQuicksort()} line 248).
+		 *
+		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
+		 */
 		void runAll() throws IOException {
-			/**
-			 * array and unsorted array are basically the same thing
-			 * But if we use just one array(e.g just (#array)) object the program can end up
-			 * sorting an already sorted array.So before we use unsortedArray we factory reset it.
-			 */
-			array = inputSizeArr(takeSize());
-			unsortedArray = array;
-			System.out.println("Average run time - quicksort: " + avgRunTimeQuicksort());
+
+			unsortedArray = inputSizeArr(takeSize());
+			array = unsortedArray;
+			System.out.println("Average run time - quicksort: " + avgRunTimeQuicksort() + " nanoseconds.");
 			// SPOT
 			System.out.println(array.length);
 			System.out.println(unsortedArray.length);
 			System.out.println(Arrays.toString(test));
-			System.out.println("Average run time - Insertion sort: " + avgRunTimeInsertionSort());
-			System.out.println("Average run time - Merge sort: " + avgRunTimeMergeSort());
-			System.out.println("Average run time - Binary search: " + avgBinarySearch());
+			System.out.println("Average run time - Insertion sort: " + avgRunTimeInsertionSort() + " nanoseconds.");
+			System.out.println("Average run time - Merge sort: " + avgRunTimeMergeSort() + " nanoseconds.");
+			System.out.println("Average run time - Binary search: " + avgBinarySearch() + " nanoseconds.");
 		}
 
 
@@ -324,3 +324,4 @@ public class Main {
 
 
 }
+
