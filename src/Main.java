@@ -137,8 +137,8 @@ public class Main {
 	}
 
 	/**
-	 * @return size of user input and will be used in {@link #inputSizeArr} to create array of length size.
-	 * @throws IOException - invalid input
+	 * @return size of user input and will be used in {@link #inputSizeArr} to create array of length {@code size}.
+	 * @throws IOException - invalid input(input not instanceof int)
 	 *                     - if size < 0 or size > 1000000 repeat input
 	 */
 	public static int takeSize() throws IOException {
@@ -209,7 +209,7 @@ public class Main {
 
 	/**
 	 * @param inputSize Input size(N) returned by {@link #takeSize()}
-	 * @return returns an array on length size filled with numbers read from @RandomText.txt inputSize number of times.
+	 * @return returns an array of length size filled with numbers read from @RandomText.txt inputSize number of times.
 	 * @throws IOException
 	 */
 	public static int[] inputSizeArr(int inputSize) throws IOException {
@@ -246,7 +246,7 @@ public class Main {
 				quickSort(array);
 				Long runTime = (System.nanoTime() - startTime);
 				array = unsortedArray;
-				// SPOT
+				// test
 				test[i] = runTime;
 				totalRunTime += runTime;
 			}
@@ -300,8 +300,8 @@ public class Main {
 
 		/**
 		 * * array and unsorted array are basically the same thing
-		 * * But if we use just one array(e.g just (#array)) object the program can end up
-		 * * sorting an already sorted array.So before we use array we factory reset it with unsortedArray in each call's method(e.g {@link #avgRunTimeQuicksort()} line 248).
+		 * * But if we use just one array(e.g just {@code array}) object the program can end up
+		 * * sorting an already sorted array.So before we use array we factory reset it with {@code unsortedArray} in each call's method(e.g {@link #avgRunTimeQuicksort()} line 248).
 		 *
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
@@ -310,7 +310,7 @@ public class Main {
 			unsortedArray = inputSizeArr(takeSize());
 			array = unsortedArray;
 			System.out.println("Average run time - quicksort: " + avgRunTimeQuicksort() + " nanoseconds.");
-			// SPOT
+			// test
 			System.out.println(array.length);
 			System.out.println(unsortedArray.length);
 			System.out.println(Arrays.toString(test));
