@@ -132,8 +132,10 @@ public class Main {
 							boolean result = binarySearch(arr, 0, arr.size() - 1, numberToFind);
 							Long runtimeBinarySearch = (System.nanoTime() - sTimeBinarySearch);
 							displayRunTime(runtimeBinarySearch);
-							if(result == true) System.out.println("Number exists!");
-							else System.out.println("Number does not exists!");
+							if(result == true)
+								System.out.println(OutputColor.ANSI_GREEN + "Number exists!" + OutputColor.ANSI_RESET);
+							else
+								System.out.println(OutputColor.ANSI_GREEN + "Number does not exists!" + OutputColor.ANSI_RESET);
 							break;
 						case 5:
 							// recursive call - interesting right?
@@ -691,8 +693,8 @@ public class Main {
 
 			System.out.println("Average run time - Binary search: ");
 			displayRunTime(avgBinarySearch());
-			if(exist == true) System.out.println("Number exists!");
-			else System.out.println("Number does not exists!");
+			if(exist == true) System.out.println(OutputColor.ANSI_GREEN + "Number exists!" + OutputColor.ANSI_RESET);
+			else System.out.println(OutputColor.ANSI_GREEN + "Number does not exists!" + OutputColor.ANSI_RESET);
 		}
 
 		void runAllQuickSort() throws IOException {
