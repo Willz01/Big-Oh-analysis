@@ -14,6 +14,7 @@ import static java.lang.Runtime.getRuntime;
 /* https://en.wikipedia.org/wiki/Best,_worst_and_average_case */
 /* https://medium.com/basecs/making-sense-of-merge-sort-part-1-49649a143478 */
 /* https://www.cs.auckland.ac.nz/courses/compsci220s1t/archive/compsci220ft/tutorials/tut04/TUTORIAL-4.pdf */
+/* https://www.howtogeek.com/462170/how-to-make-a-curved-graph-in-excel/ */
 
 public class Main {
 	static boolean exit = false;
@@ -27,7 +28,7 @@ public class Main {
 		do {
 			System.out.println("****************************");
 			System.out.println("1) Run for each algorithm");
-			System.out.println("Returns the avg for: ");
+			System.out.println("Returns the average run time for: ");
 			System.out.println("   2 - Quick sort");
 			System.out.println("   3 - Insertion sort");
 			System.out.println("   4 - Merge sort");
@@ -57,7 +58,8 @@ public class Main {
 							System.out.println("2) Merge sort");
 							System.out.println("3) Insertion sort");
 							System.out.println("4) Binary search");
-							System.out.println("5) Exit");
+							System.out.println("5) Main menu");
+							System.out.println("6) Exit");
 							System.out.println("******************");
 							System.out.print(">> ");
 							choice = input.nextInt();
@@ -68,7 +70,7 @@ public class Main {
 						}
 					} while (!done);
 
-					if(choice == 5)
+					if(choice == 6)
 						exit = true;
 
 					switch (choice) {
@@ -134,6 +136,10 @@ public class Main {
 							else System.out.println("Number does not exists!");
 							break;
 						case 5:
+							// recursive call - interesting right?
+							main(null);
+							break;
+						case 6:
 							System.out.println("Thanks for using!");
 							System.exit(0);
 							break;
@@ -233,9 +239,9 @@ public class Main {
 
 	/**
 	 * @param arr - ArrayList to implement algorithm on
+	 *            Not in use!
 	 */
 	public static void quickSort(ArrayList<Integer> arr, int sortType) {
-//		System.out.println("QUICK SORT");
 		/** code **/
 		if(sortType == 1) {
 			quickSortMedianOfThree(arr);
@@ -248,6 +254,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * @param arr - ArrayList to implement algorithm on.
+	 */
 	public static void quickSortIndexZeroPivot(ArrayList<Integer> arr) {
 		int size = arr.size();
 		// base case
@@ -278,6 +287,9 @@ public class Main {
 		arr.addAll(larger);
 	}
 
+	/**
+	 * @param arr - ArrayList to implement algorithm on.
+	 */
 	public static void quickSortRandomIndexPivot(ArrayList<Integer> arr) {
 		int size = arr.size();
 		// base case
@@ -311,6 +323,9 @@ public class Main {
 		arr.addAll(larger);
 	}
 
+	/**
+	 * @param arr - ArrayList to implement algorithm on.
+	 */
 	public static void quickSortMedianOfThree(ArrayList<Integer> arr) {
 		int size = arr.size();
 		// base case
@@ -368,19 +383,27 @@ public class Main {
 	}
 
 	/**
-	 * @param arr    - ArrayList to implement algorithm on
-	 * @param number - number to search for
-	 * @return - if number exists in sort ArrayList return true, otherwise false.
+	 * @param arr          - ArrayList to implement algorithm on
+	 * @param numberToFind - number to search for
+	 * @param left         - the left index of the arraylist, which is zero
+	 * @param right        - the right index of the array list, which is size - 1
+	 * @return - if number exists in sorted ArrayList return true, otherwise false.
 	 */
 	public static boolean binarySearch(ArrayList<Integer> arr, int left, int right, int numberToFind) {
 		/** code **/
-		if(right >= left) {
+		while (left <= right) {
+			// get middle index
 			int mid = left + (right - left) / 2;
+			// if compare(mid,search) == 0, return 1.
 			if(arr.get(mid) == numberToFind)
 				return true;
-			if(arr.get(mid) > numberToFind)
-				return binarySearch(arr, left, mid - 1, numberToFind);
-			return binarySearch(arr, mid + 1, right, numberToFind);
+			// is compare(mid,search) == 1, adjust right to be center - 1
+			if(arr.get(mid) > numberToFind) {
+				right = mid - 1;
+			} else
+				// arr.get(mid) < searchFor
+				// middle element is less than number in search of, shift left rightward.(center + 1)
+				left = mid + 1;
 		}
 		return false;
 	}
@@ -685,8 +708,6 @@ public class Main {
 			arrayList = unsortedArrayList;
 			System.out.println("Average run time - Quick sort index zero pivot: ");
 			displayRunTime(avgRunTimeQuicksortIndexZeroPivot());
-
-
 		}
 
 	}
