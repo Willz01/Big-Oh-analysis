@@ -26,19 +26,31 @@ public class Main {
 		Scanner input = new Scanner(System.in);
 
 		do {
-			System.out.println("****************************");
-			System.out.println("1) Run for each algorithm");
-			System.out.println("Returns the average run time for: ");
-			System.out.println("   2 - Quick sort");
-			System.out.println("   3 - Insertion sort");
-			System.out.println("   4 - Merge sort");
-			System.out.println("   5 - Binary Search");
-			System.out.println("6) Exit");
-			System.out.println("****************************");
-			System.out.print(">> ");
+			int choice1 = 0;
+			boolean mainDone = false;
+			do{
+				try {
+					System.out.println("****************************");
+					System.out.println("1) Run for each algorithm");
+					System.out.println("Returns the average(more correct values) run time for: ");
+					System.out.println("   2 - Quick sort");
+					System.out.println("   3 - Insertion sort");
+					System.out.println("   4 - Merge sort");
+					System.out.println("   5 - Binary Search");
+					System.out.println("6) Exit");
+					System.out.println("****************************");
+					System.out.print(">> ");
 
-			int choice1 = input.nextInt();
-			input.nextLine();
+					choice1 = input.nextInt();
+					input.nextLine();
+					mainDone = true;
+				}catch (InputMismatchException e){
+					input.nextLine();
+					System.out.println("Invalid input!");
+				}
+
+			}while (!mainDone);
+
 
 			if(choice1 == 1) {
 				do {
@@ -241,7 +253,7 @@ public class Main {
 
 	/**
 	 * @param arr - ArrayList to implement algorithm on
-	 *            Not in use!
+	 *              Not in use!
 	 */
 	public static void quickSort(ArrayList<Integer> arr, int sortType) {
 		/** code **/
@@ -337,7 +349,7 @@ public class Main {
 		ArrayList<Integer> same = new ArrayList<>();
 		ArrayList<Integer> larger = new ArrayList<>();
 
-		// Getting the median of 3
+		// Getting the median of 3 pivot
 		// the nth element
 		int n = arr.get(arr.size() - 1);
 		// the first element
