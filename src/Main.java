@@ -46,7 +46,7 @@ public class Main {
 					mainDone = true;
 				}catch (InputMismatchException e){
 					input.nextLine();
-					System.out.println("Invalid input!");
+					System.err.println("Invalid input!");
 				}
 
 			}while (!mainDone);
@@ -78,7 +78,7 @@ public class Main {
 							done = true;
 						} catch (InputMismatchException e) {
 							input.nextLine();
-							System.err.println("Number must be an integer");
+							System.err.println("Input must be an integer");
 						}
 					} while (!done);
 
