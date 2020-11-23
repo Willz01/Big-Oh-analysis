@@ -144,7 +144,7 @@ public class Main {
 							boolean result = binarySearch(arr, 0, arr.size() - 1, numberToFind);
 							Long runtimeBinarySearch = (System.nanoTime() - sTimeBinarySearch);
 							displayRunTime(runtimeBinarySearch);
-							if(result == true)
+							if(result)
 								System.out.println(OutputColor.ANSI_GREEN + "Number exists!" + OutputColor.ANSI_RESET);
 							else
 								System.out.println(OutputColor.ANSI_GREEN + "Number does not exists!" + OutputColor.ANSI_RESET);
@@ -514,7 +514,7 @@ public class Main {
 
 	static class AverageRunTime {
 		ArrayList<Integer> arrayList;
-		ArrayList<Integer> unsortedArrayList = this.arrayList;
+		ArrayList unsortedArrayList = this.arrayList;
 		// test
 		Long[] testInsertionSort = new Long[11];
 		Long[] testMergeSort = new Long[11];
@@ -665,7 +665,7 @@ public class Main {
 		/**
 		 * * array and unsorted array are basically the same thing
 		 * * But if we use just one ArrayList(e.g just {@code array}) object the program can end up
-		 * * sorting an already sorted array.So before we use array we factory reset it with {@code unsortedArray} in each call's method(e.g {@link #avgRunTimeQuicksort()} line 248).
+		 * * sorting an already sorted array.So before we use array we factory reset it with {@code unsortedArray}.
 		 *
 		 * @throws IOException - thrown by {@link #takeSize()} and {@link #inputSizeArr(int)}
 		 */
