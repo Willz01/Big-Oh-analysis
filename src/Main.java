@@ -24,6 +24,11 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
+		System.out.println("========================================================================================");
+		System.out.println("Big oh analysis on several sorting and a searching algorithms.");
+		System.out.println("The running time of each algorithm is calculated by (currentTIme - startTime)");
+		System.out.println("Running time is displayed in nano seconds, milli seconds and seconds!");
+		System.out.println("========================================================================================");
 
 		do {
 			int choice1 = 0;
@@ -54,11 +59,6 @@ public class Main {
 
 			if(choice1 == 1) {
 				do {
-					System.out.println("=====================================================================================================");
-					System.out.println("Big oh analysis on several sorting and a searching algorithms.");
-					System.out.println("The running time of each algorithm is calculated by (currentTIme - startTime)");
-					System.out.println("Running time is displayed in nano seconds, milli seconds and seconds!");
-					System.out.println("=====================================================================================================");
 
 					int choice = 0;
 					boolean done = false;
